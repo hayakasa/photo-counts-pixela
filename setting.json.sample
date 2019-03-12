@@ -1,5 +1,12 @@
 {
   "username": "yourname",
-  "token": "yoursecrettoken",
-  "graphId": "yourgraphid"
+  "token": "yourtoken",
+  "id": "yourid",
+  "name": "your graph name",
+  "unit": "yourunit",
+  "type": "int",
+  "color": "shibafu",
+  "agreeTermsOfService": "yes",
+  "notMinor": "yes",
+  "processedDate": ""
 }
