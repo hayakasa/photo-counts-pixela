@@ -1,0 +1,5 @@
+{
+  "username": "yourname",
+  "token": "yoursecrettoken",
+  "graphId": "yourgraphid"
+}

@@ -1,0 +1,14 @@
+{
+  "name": "photo-counts-pixela",
+  "version": "0.0.1",
+  "main": "index.js",
+  "repository": "https://github.com/hayakasa/photo-counts-pixela.git",
+  "author": "hayakasa <hayakasa@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "pixela-node": "^0.0.4"
+  }
+}
