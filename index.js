@@ -23,9 +23,7 @@ fs.readdir(basePath, function(err, list){
   dirList.sort().reverse()
   for(var i = 0; i < dirList.length; i++){
     // 設定ファイルに保存した日付と比較し、一致したら処理終了（新しい順に処理するので、一致した時点でそれより前の日付は処理が終わっているはず）
-    let processedDate = new Date(setting.processedDate)
-    let date = new Date(dirList[i])
-    if (setting.processedDate && processedDate === date) {
+    if (processedDate === dirList[i]) {
       break;
     }
 
@@ -38,17 +36,19 @@ fs.readdir(basePath, function(err, list){
       })
 
       // ファイルの数をpixelaに送信
+      let date = new Date(dirList[i])
       client.createPixel(
         setting.id,
         {
           date: (date.getFullYear()+'')+(('0' + (date.getMonth() + 1)).slice(-2))+(('0' + date.getDate()).slice(-2)),
-          quantity: fileList.length
+          quantity: fileList.length.toString()
         }
       ).then(res => console.log(res))
+      .catch(e => console.log(e.response.data))
     })
   }
 
   // 一番新しい日付を設定ファイルに保存
   setting.processedDate = dirList[0]
-  fs.writeFile('./setting.json', JSON.stringify(setting, null, '    '))
+  fs.writeFileSync('./setting.json', JSON.stringify(setting, null, '    '))
 })
