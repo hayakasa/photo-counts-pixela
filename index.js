@@ -21,14 +21,14 @@ fs.readdir(basePath, function(err, list){
   })
   // 新しい順に処理
   dirList.sort().reverse()
-  for(var i = 0; i < dirList.length; i++){
+  dirList.some(function(value) {
     // 設定ファイルに保存した日付と比較し、一致したら処理終了（新しい順に処理するので、一致した時点でそれより前の日付は処理が終わっているはず）
-    if (processedDate === dirList[i]) {
-      break;
+    if (setting.processedDate === value) {
+      return true;
     }
 
     // 日付別ディレクトリ内のファイル名一覧を取得
-    let targetPath = path.join(basePath, dirList[i])
+    let targetPath = path.join(basePath, value)
     fs.readdir(targetPath, function(err, list){
       if (err) throw err
       let fileList = list.filter(function(item){
@@ -36,17 +36,18 @@ fs.readdir(basePath, function(err, list){
       })
 
       // ファイルの数をpixelaに送信
-      let date = new Date(dirList[i])
+      let date = new Date(value)
       client.createPixel(
         setting.id,
         {
           date: (date.getFullYear()+'')+(('0' + (date.getMonth() + 1)).slice(-2))+(('0' + date.getDate()).slice(-2)),
           quantity: fileList.length.toString()
         }
-      ).then(res => console.log(res))
+      )
+      .then(res => console.log(res))
       .catch(e => console.log(e.response.data))
     })
-  }
+  })
 
   // 一番新しい日付を設定ファイルに保存
   setting.processedDate = dirList[0]
